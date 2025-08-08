@@ -1,0 +1,286 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 234 179 8; /* yellow-400 */
+    --color-secondary: 17 24 39; /* gray-900 */
+    --color-accent: 31 41 55; /* gray-800 */
+    --color-surface: 10 10 12; /* deep black */
+    --color-edge: 38 38 44; /* subtle edge glow */
+  }
+
+  /* Modern background pattern */
+  .bg-pattern {
+    background-color: rgb(var(--color-surface));
+    background-image:
+      radial-gradient(
+        at 80% 20%,
+        rgba(var(--color-primary), 0.1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 0% 100%,
+        rgba(var(--color-primary), 0.1) 0px,
+        transparent 50%
+      ),
+      linear-gradient(to bottom, transparent, rgb(var(--color-surface)));
+    background-size: 200% 200%;
+    background-attachment: fixed;
+  }
+
+  /* Animated gradient border */
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--color-primary), 0.8),
+      rgba(var(--color-primary), 0.2)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
+/* Custom base styles */
+body {
+  @apply bg-pattern font-sans text-gray-300 antialiased;
+}
+
+/* Enhanced typography with better contrast */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold text-white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  @apply text-4xl md:text-5xl;
+  background: linear-gradient(to right, #facc15, #fde047);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h2 {
+  @apply text-3xl md:text-4xl;
+}
+
+h3 {
+  @apply text-2xl md:text-3xl;
+}
+
+/* Enhanced link styles */
+a {
+  @apply transition-all duration-300;
+  background-image: linear-gradient(
+    rgb(var(--color-primary)),
+    rgb(var(--color-primary))
+  );
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+}
+a:hover {
+  background-size: 100% 2px;
+  color: rgb(var(--color-primary));
+}
+
+/* Smooth scrolling with momentum */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+/* Enhanced animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes gradientPulse {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-gradient-pulse {
+  animation: gradientPulse 8s ease infinite;
+  background-size: 200% 200%;
+}
+
+/* Modern glass components */
+@layer components {
+  .glass-card {
+    position: relative;
+    border-radius: 1rem;
+    background: rgba(17, 24, 39, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow:
+      0 4px 30px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.02);
+    transition: all 0.3s ease;
+  }
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 8px 40px rgba(234, 179, 8, 0.15),
+      0 0 0 1px rgba(234, 179, 8, 0.1);
+  }
+
+  .primary-button {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border-radius: 9999px;
+    background: linear-gradient(to right, #facc15, #fbbf24);
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    color: #000;
+    box-shadow:
+      0 4px 15px -3px rgba(250, 204, 21, 0.4),
+      0 4px 6px -4px rgba(250, 204, 21, 0.4);
+    transition: all 0.3s ease;
+  }
+  .primary-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #fbbf24, #facc15);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 25px -5px rgba(250, 204, 21, 0.5),
+      0 8px 10px -6px rgba(250, 204, 21, 0.5);
+  }
+  .primary-button:hover::before {
+    opacity: 1;
+  }
+
+  .outline-button {
+    @apply rounded-full border-2 border-yellow-400 bg-transparent px-6 py-3 font-bold text-yellow-400 transition-all;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .outline-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(234, 179, 8, 0.1),
+      rgba(234, 179, 8, 0.2)
+    );
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .outline-button:hover {
+    @apply bg-yellow-400 text-black;
+  }
+  .outline-button:hover::before {
+    transform: scaleX(1);
+  }
+
+  .section-padding {
+    @apply px-6 py-24;
+  }
+
+  .tag {
+    @apply rounded-full bg-gray-800 px-3 py-1 text-xs font-medium text-yellow-400;
+    transition: all 0.2s ease;
+  }
+  .tag:hover {
+    @apply bg-gray-700 text-yellow-300;
+    transform: translateY(-1px);
+  }
+}
+
+/* Enhanced scrollbar */
+::-webkit-scrollbar {
+  @apply w-2.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-gradient-to-b from-yellow-400 to-yellow-600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Selection styling with gradient */
+::selection {
+  background: rgb(var(--color-primary));
+  color: #000;
+  text-shadow: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
