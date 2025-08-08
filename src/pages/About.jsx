@@ -113,7 +113,7 @@ const About = () => {
                 initial={{ scale: 1.1 }}
                 animate={imageInView ? { scale: 1 } : {}}
                 transition={{ duration: 1.2 }}
-                src="/src/images/background.jpg"
+                src="images/background.jpg"
                 alt="Profile"
                 className="h-full w-full object-cover"
               />
