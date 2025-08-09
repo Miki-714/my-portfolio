@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 import { motion, useInView } from "framer-motion";
+import profileImage from "../../src/images/cropped_circle_image.png"; // Update path as needed
 
 const roles = [
   "A FREELANCER",
@@ -151,9 +152,9 @@ const HeroSection = ({ menuOpen }) => {
               <motion.img
                 initial={{ scale: 1.1 }}
                 animate={isInView ? { scale: 1 } : {}}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 1.2, type: "spring" }}
-                src="/src/images/cropped_circle_image.png"
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                src={profileImage}
                 alt="Mikias Profile"
                 className="hex-image"
               />
@@ -346,93 +347,6 @@ const HeroSection = ({ menuOpen }) => {
           opacity: 0;
         }
         .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(246, 211, 101, 0.2);
-        }
-
-        /* Hexagon Card Styles */
-        .hex-card-container {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          padding: 8px;
-        }
-
-        .hex-card {
-          --background: linear-gradient(to right, #f6d365 0%, #fda085 100%);
-          width: 100%;
-          height: 100%;
-          position: relative;
-          z-index: 1;
-          transition: all 0.3s ease;
-          clip-path: polygon(
-            50% 0%,
-            100% 25%,
-            100% 75%,
-            50% 100%,
-            0% 75%,
-            0% 25%
-          );
-        }
-
-        .hex-card::before,
-        .hex-card::after {
-          content: "";
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          z-index: -1;
-          transition: all 0.5s ease;
-          clip-path: polygon(
-            50% 0%,
-            100% 25%,
-            100% 75%,
-            50% 100%,
-            0% 75%,
-            0% 25%
-          );
-        }
-
-        .hex-card::before {
-          background: linear-gradient(
-            to bottom right,
-            #f6d365 0%,
-            #fda085 100%
-          );
-          transform: rotate(2deg);
-        }
-
-        .hex-card::after {
-          background: linear-gradient(to top right, #84fab0 0%, #8fd3f4 100%);
-          transform: rotate(-2deg);
-        }
-
-        .hex-card-info {
-          background: #111827;
-          width: 100%;
-          height: 100%;
-          position: relative;
-          z-index: 2;
-          transition: all 0.3s ease;
-          clip-path: polygon(
-            50% 0%,
-            100% 25%,
-            100% 75%,
-            50% 100%,
-            0% 75%,
-            0% 25%
-          );
-          overflow: hidden;
-        }
-
-        .hex-card:hover::before,
-        .hex-card:hover::after {
-          opacity: 0;
-        }
-
-        .hex-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 10px 20px rgba(246, 211, 101, 0.2);
         }
