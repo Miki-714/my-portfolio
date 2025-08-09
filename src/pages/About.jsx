@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import profileImage from "../../src/images/background.jpg"; // Update path as needed
 
 const About = () => {
   const [titleRef, titleInView] = useInView({
@@ -99,7 +100,7 @@ const About = () => {
             {/* Blurred background container */}
             <div className="absolute -inset-4 z-0 overflow-hidden rounded-3xl">
               <motion.img
-                src="src/images/background.jpg"
+                src={profileImage}
                 alt="Blurred background"
                 className="h-full w-full scale-110 object-cover blur-xl brightness-75"
               />
@@ -112,10 +113,16 @@ const About = () => {
               <motion.img
                 initial={{ scale: 1.1 }}
                 animate={imageInView ? { scale: 1 } : {}}
-                transition={{ duration: 1.2 }}
-                src="src/images/background.jpg"
+                transition={{
+                  duration: 1.2,
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 10,
+                }}
+                src={profileImage}
                 alt="Profile"
                 className="h-full w-full object-cover"
+                whileHover={{ rotate: 10, scale: 1.1 }}
               />
 
               {/* Gradient overlay */}
