@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 import { motion, useInView } from "framer-motion";
-import profileImage from "../../src/images/cropped_circle_image.png"; // Update path as needed
+import profileImage from "../../src/images/cropped_circle_image.png";
 
 const roles = [
   "A FREELANCER",
@@ -16,7 +16,7 @@ const HeroSection = ({ menuOpen }) => {
   const [displayed, setDisplayed] = useState("");
   const [removing, setRemoving] = useState(false);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const isInView = useInView(ref, { once: true, amount: 0.3 }); // Reduced threshold for mobile
 
   useEffect(() => {
     let timeout;
@@ -43,25 +43,25 @@ const HeroSection = ({ menuOpen }) => {
 
   return (
     <section
-      className={`relative mt-16 flex min-h-[73vh] items-center justify-center bg-black md:mt-24 ${
+      className={`relative mt-16 flex min-h-[80vh] items-center justify-center bg-black md:mt-24 ${
         menuOpen ? "backdrop-blur-sm" : ""
       }`}
       style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
       ref={ref}
     >
-      {/* Background decorative elements */}
+      {/* Background decorative elements - Simplified for mobile */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-yellow-400/10 blur-3xl"></div>
-        <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-yellow-400/5 blur-3xl"></div>
+        <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-yellow-400/10 blur-xl md:h-64 md:w-64 md:blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-yellow-400/5 blur-xl md:h-64 md:w-64 md:blur-3xl"></div>
       </div>
 
       <div className="container mx-auto flex flex-col items-center px-4 md:flex-row md:items-center md:justify-center md:gap-52 md:px-6">
-        {/* Card-Style Content Container */}
+        {/* Content Container - Mobile first approach */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.8, type: "spring" }}
-          className="group order-2 w-full md:order-1 md:w-[600px]"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, type: "spring" }}
+          className="order-2 w-full md:order-1 md:w-[600px]"
         >
           <div className="card h-full w-full">
             <div className="card-info">
@@ -69,23 +69,22 @@ const HeroSection = ({ menuOpen }) => {
                 initial={{ y: 20 }}
                 animate={isInView ? { y: 0 } : {}}
                 transition={{ delay: 0.2 }}
-                className="relative z-10 h-full p-6 md:p-8"
+                className="relative z-10 h-full p-4 sm:p-6 md:p-8"
               >
-                {/* Decorative elements inside card */}
-                <div className="absolute inset-0 rounded-xl bg-[url('/public/images/dot-pattern.svg')] opacity-10 mix-blend-overlay"></div>
-                <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-yellow-400/10 blur-3xl"></div>
-                <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-yellow-400/5 blur-3xl"></div>
+                {/* Simplified decorative elements for mobile */}
+                <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-yellow-400/10 blur-xl md:h-40 md:w-40 md:blur-3xl"></div>
+                <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-yellow-400/5 blur-xl md:h-40 md:w-40 md:blur-3xl"></div>
 
                 <motion.h2
                   whileHover={{ x: 5 }}
-                  className="mb-3 text-lg font-medium tracking-widest text-gray-200 md:text-xl"
+                  className="mb-2 text-sm font-medium tracking-widest text-gray-200 sm:text-base md:mb-3 md:text-xl"
                 >
                   HI, I&#39;M MIKIAS!
                 </motion.h2>
 
                 <motion.h1
                   whileHover={{ x: 5 }}
-                  className="mb-5 text-3xl font-bold text-white md:mb-7 md:text-4xl"
+                  className="mb-3 text-2xl font-bold text-white sm:text-3xl md:mb-5 md:text-4xl"
                 >
                   <span className="bg-gradient-to-r from-yellow-400 to-yellow-300 bg-clip-text text-transparent">
                     {displayed}
@@ -95,21 +94,19 @@ const HeroSection = ({ menuOpen }) => {
 
                 <motion.p
                   whileHover={{ x: 5 }}
-                  className="mb-7 text-base leading-relaxed text-gray-300 md:mb-9 md:text-lg"
+                  className="mb-4 text-sm leading-relaxed text-gray-300 sm:text-base md:mb-7 md:text-lg"
                 >
                   I&#39;m a passionate full-stack developer with a mission to
-                  create robust and scalable web applications. With expertise in
-                  both frontend and backend technologies, I specialize in
-                  building complete digital solutions that deliver exceptional
-                  user experiences.
+                  create robust and scalable web applications.
                 </motion.p>
 
-                <div className="flex flex-col gap-4 sm:flex-row">
+                {/* Stack buttons vertically on mobile */}
+                <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Button className="w-full rounded-[12px] bg-gradient-to-r from-yellow-400 to-yellow-300 px-6 py-3 font-semibold text-black shadow-lg transition-all hover:shadow-xl sm:w-auto sm:px-8">
+                    <Button className="w-full rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-300 px-4 py-2 text-sm font-semibold text-black shadow-lg transition-all hover:shadow-xl sm:px-6 sm:py-3 sm:text-base">
                       DOWNLOAD CV
                     </Button>
                   </motion.div>
@@ -119,9 +116,9 @@ const HeroSection = ({ menuOpen }) => {
                   >
                     <Button
                       variant="outline"
-                      className="w-full rounded-[12px] border-yellow-400 px-6 py-3 font-semibold text-yellow-400 transition-all hover:bg-yellow-400 hover:text-black hover:shadow-xl sm:w-auto sm:px-8"
+                      className="w-full rounded-lg border-yellow-400 px-4 py-2 text-sm font-semibold text-yellow-400 transition-all hover:bg-yellow-400 hover:text-black hover:shadow-xl sm:px-6 sm:py-3 sm:text-base"
                     >
-                      WATCH THE VIDEO
+                      WATCH VIDEO
                     </Button>
                   </motion.div>
                 </div>
@@ -130,17 +127,17 @@ const HeroSection = ({ menuOpen }) => {
           </div>
         </motion.div>
 
-        {/* Hexagon Frame with Animated Border */}
+        {/* Hexagon Frame - Responsive sizing */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           whileHover={{ scale: 1.03 }}
-          transition={{ duration: 0.8, type: "spring", delay: 0.2 }}
-          className="order-1 w-full md:order-2 md:w-auto"
+          transition={{ duration: 0.6, type: "spring", delay: 0.2 }}
+          className="order-1 mb-8 w-full max-w-[280px] md:order-2 md:mb-0 md:max-w-[350px]"
         >
           <div
-            className="hex-frame"
-            style={{ width: "350px", height: "400px" }}
+            className="hex-frame mx-auto"
+            style={{ width: "100%", height: "320px" }}
           >
             {/* Border Layers */}
             <div className="hex-border-layer hex-layer-1"></div>
@@ -160,8 +157,8 @@ const HeroSection = ({ menuOpen }) => {
               />
               <div className="hex-overlay"></div>
 
-              {/* Floating Particles */}
-              {[...Array(8)].map((_, i) => (
+              {/* Reduced particles on mobile */}
+              {[...Array(4)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="hex-particle"
@@ -170,8 +167,8 @@ const HeroSection = ({ menuOpen }) => {
                     isInView
                       ? {
                           opacity: [0, 0.6, 0],
-                          y: [-10, Math.random() * 40 - 20],
-                          x: Math.random() * 40 - 20,
+                          y: [-10, Math.random() * 30 - 15],
+                          x: Math.random() * 30 - 15,
                           transition: {
                             duration: 4 + Math.random() * 4,
                             delay: 0.5 + i * 0.2,
@@ -189,11 +186,13 @@ const HeroSection = ({ menuOpen }) => {
       </div>
 
       <style>{`
-        /* Hexagon Frame Styles */
+        /* Responsive Hexagon Frame Styles */
         .hex-frame {
           position: relative;
           width: 100%;
           height: 100%;
+          max-width: 300px;
+          margin: 0 auto;
         }
 
         .hex-border-layer {
@@ -210,7 +209,7 @@ const HeroSection = ({ menuOpen }) => {
             0% 75%,
             0% 25%
           );
-          transition: all 0.5s ease;
+          transition: all 0.3s ease;
         }
 
         .hex-layer-1 {
@@ -232,10 +231,10 @@ const HeroSection = ({ menuOpen }) => {
 
         .hex-content {
           position: absolute;
-          top: 3px;
-          left: 3px;
-          right: 3px;
-          bottom: 3px;
+          top: 2px;
+          left: 2px;
+          right: 2px;
+          bottom: 2px;
           background: #111827;
           clip-path: polygon(
             50% 0%,
@@ -254,7 +253,7 @@ const HeroSection = ({ menuOpen }) => {
           height: 100%;
           object-fit: cover;
           object-position: top center;
-          transition: all 0.5s ease;
+          transition: all 0.3s ease;
         }
 
         .hex-overlay {
@@ -273,24 +272,26 @@ const HeroSection = ({ menuOpen }) => {
 
         .hex-particle {
           position: absolute;
-          width: 4px;
-          height: 4px;
+          width: 3px;
+          height: 3px;
           border-radius: 50%;
           background: rgba(234, 179, 8, 0.7);
         }
 
-        /* Hover Effects */
-        .hex-frame:hover .hex-layer-1,
-        .hex-frame:hover .hex-layer-2 {
-          opacity: 0;
+        /* Simplified hover effects for mobile */
+        @media (hover: hover) {
+          .hex-frame:hover .hex-layer-1,
+          .hex-frame:hover .hex-layer-2 {
+            opacity: 0;
+          }
+
+          .hex-frame:hover {
+            transform: translateY(-5px);
+            filter: drop-shadow(0 10px 20px rgba(246, 211, 101, 0.3));
+          }
         }
 
-        .hex-frame:hover {
-          transform: translateY(-5px);
-          filter: drop-shadow(0 10px 20px rgba(246, 211, 101, 0.3));
-        }
-
-        /* Content Card Styles */
+        /* Responsive Card Styles */
         .card {
           --background: linear-gradient(to right, #f6d365 0%, #fda085 100%);
           width: 100%;
@@ -303,6 +304,7 @@ const HeroSection = ({ menuOpen }) => {
           z-index: 1;
           transition: all 0.3s ease;
         }
+
         .card::before,
         .card::after {
           content: "";
@@ -313,8 +315,9 @@ const HeroSection = ({ menuOpen }) => {
           height: 100%;
           border-radius: 1rem;
           z-index: -1;
-          transition: all 0.5s ease;
+          transition: all 0.3s ease;
         }
+
         .card::before {
           background: linear-gradient(
             to bottom right,
@@ -323,10 +326,12 @@ const HeroSection = ({ menuOpen }) => {
           );
           transform: rotate(2deg);
         }
+
         .card::after {
           background: linear-gradient(to top right, #84fab0 0%, #8fd3f4 100%);
           transform: rotate(-2deg);
         }
+
         .card-info {
           background: #111827;
           display: flex;
@@ -339,16 +344,20 @@ const HeroSection = ({ menuOpen }) => {
           border-radius: 0.7rem;
           position: relative;
           z-index: 2;
-          padding: 1.5rem;
+          padding: 1rem;
           transition: all 0.3s ease;
         }
-        .card:hover::before,
-        .card:hover::after {
-          opacity: 0;
-        }
-        .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(246, 211, 101, 0.2);
+
+        @media (hover: hover) {
+          .card:hover::before,
+          .card:hover::after {
+            opacity: 0;
+          }
+
+          .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(246, 211, 101, 0.2);
+          }
         }
       `}</style>
     </section>
