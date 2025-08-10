@@ -2,7 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 import { motion, useInView } from "framer-motion";
-import profileImage from "../../src/images/cropped_circle_image.png";
+import { Document, Page, pdfjs } from "react-pdf";
+import profileImage from "../images/cropped_circle_image.png";
+
+// Using CDN as the most reliable solution
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const roles = [
   "A FREELANCER",
@@ -12,12 +16,23 @@ const roles = [
 ];
 
 const HeroSection = ({ menuOpen }) => {
+  // Typing animation states
   const [index, setIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [removing, setRemoving] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 }); // Reduced threshold for mobile
 
+  // PDF viewer states
+  const [numPages, setNumPages] = useState(null);
+  const [isPDFOpen, setIsPDFOpen] = useState(false);
+  const [pdfError, setPdfError] = useState(null);
+  const [pdfWidth, setPdfWidth] = useState(800);
+
+  // Refs
+  const ref = useRef(null);
+  const pdfWrapperRef = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  // Typing effect
   useEffect(() => {
     let timeout;
     const currentRole = roles[index];
@@ -41,6 +56,47 @@ const HeroSection = ({ menuOpen }) => {
     return () => clearTimeout(timeout);
   }, [displayed, removing, index]);
 
+  // Set PDF width based on container
+  useEffect(() => {
+    if (isPDFOpen && pdfWrapperRef.current) {
+      const updateWidth = () => {
+        const newWidth = Math.min(pdfWrapperRef.current.clientWidth - 40, 800);
+        setPdfWidth(newWidth);
+      };
+
+      updateWidth();
+      window.addEventListener("resize", updateWidth);
+      return () => window.removeEventListener("resize", updateWidth);
+    }
+  }, [isPDFOpen]);
+
+  // PDF handling - points to public folder
+  const pdfFile = "/Mikias_Dereje_CV.pdf";
+
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+    setPdfError(null);
+  };
+
+  const onDocumentLoadError = (error) => {
+    console.error("PDF load error:", error);
+    setPdfError(
+      error.message.includes("MissingPDF")
+        ? "PDF file not found. Please ensure 'Mikias_Dereje_CV.pdf' exists in the public folder."
+        : "Failed to load PDF. Please try again later.",
+    );
+  };
+
+  const handleViewCV = () => {
+    setIsPDFOpen(!isPDFOpen);
+    setPdfError(null);
+  };
+
+  const handleClosePDF = (e) => {
+    e.stopPropagation();
+    setIsPDFOpen(false);
+  };
+
   return (
     <section
       className={`relative mt-16 flex min-h-[80vh] items-center justify-center bg-black md:mt-24 ${
@@ -49,14 +105,14 @@ const HeroSection = ({ menuOpen }) => {
       style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
       ref={ref}
     >
-      {/* Background decorative elements - Simplified for mobile */}
+      {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-yellow-400/10 blur-xl md:h-64 md:w-64 md:blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-yellow-400/5 blur-xl md:h-64 md:w-64 md:blur-3xl"></div>
       </div>
 
       <div className="container mx-auto flex flex-col items-center px-4 md:flex-row md:items-center md:justify-center md:gap-52 md:px-6">
-        {/* Content Container - Mobile first approach */}
+        {/* Content Container */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -71,7 +127,6 @@ const HeroSection = ({ menuOpen }) => {
                 transition={{ delay: 0.2 }}
                 className="relative z-10 h-full p-4 sm:p-6 md:p-8"
               >
-                {/* Simplified decorative elements for mobile */}
                 <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-yellow-400/10 blur-xl md:h-40 md:w-40 md:blur-3xl"></div>
                 <div className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full bg-yellow-400/5 blur-xl md:h-40 md:w-40 md:blur-3xl"></div>
 
@@ -100,25 +155,16 @@ const HeroSection = ({ menuOpen }) => {
                   create robust and scalable web applications.
                 </motion.p>
 
-                {/* Stack buttons vertically on mobile */}
-                <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button className="w-full rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-300 px-4 py-2 text-sm font-semibold text-black shadow-lg transition-all hover:shadow-xl sm:px-6 sm:py-3 sm:text-base">
-                      DOWNLOAD CV
-                    </Button>
-                  </motion.div>
+                <div className="flex justify-center">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <Button
-                      variant="outline"
-                      className="w-full rounded-lg border-yellow-400 px-4 py-2 text-sm font-semibold text-yellow-400 transition-all hover:bg-yellow-400 hover:text-black hover:shadow-xl sm:px-6 sm:py-3 sm:text-base"
+                      onClick={handleViewCV}
+                      className="w-full min-w-[200px] rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-300 px-6 py-3 text-sm font-semibold text-black shadow-lg transition-all hover:from-yellow-300 hover:to-yellow-400 hover:shadow-xl sm:text-base"
                     >
-                      WATCH VIDEO
+                      {isPDFOpen ? "CLOSE CV" : "VIEW MY CV"}
                     </Button>
                   </motion.div>
                 </div>
@@ -127,7 +173,7 @@ const HeroSection = ({ menuOpen }) => {
           </div>
         </motion.div>
 
-        {/* Hexagon Frame - Responsive sizing */}
+        {/* Hexagon Frame */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -139,12 +185,10 @@ const HeroSection = ({ menuOpen }) => {
             className="hex-frame mx-auto"
             style={{ width: "100%", height: "320px" }}
           >
-            {/* Border Layers */}
             <div className="hex-border-layer hex-layer-1"></div>
             <div className="hex-border-layer hex-layer-2"></div>
             <div className="hex-border-layer hex-layer-3"></div>
 
-            {/* Content Area */}
             <div className="hex-content">
               <motion.img
                 initial={{ scale: 1.1 }}
@@ -157,7 +201,6 @@ const HeroSection = ({ menuOpen }) => {
               />
               <div className="hex-overlay"></div>
 
-              {/* Reduced particles on mobile */}
               {[...Array(4)].map((_, i) => (
                 <motion.div
                   key={i}
@@ -185,8 +228,91 @@ const HeroSection = ({ menuOpen }) => {
         </motion.div>
       </div>
 
+      {/* PDF Viewer Modal */}
+      {isPDFOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+          onClick={handleClosePDF}
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-4"
+            ref={pdfWrapperRef}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={handleClosePDF}
+              className="absolute right-4 top-4 z-10 rounded-full bg-red-500 p-2 text-white transition-colors hover:bg-red-600"
+              aria-label="Close CV"
+            >
+              ✕
+            </button>
+
+            {pdfError ? (
+              <div className="flex h-64 flex-col items-center justify-center p-6 text-center">
+                <div className="mb-4 text-red-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="mx-auto h-12 w-12"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    />
+                  </svg>
+                  <p className="mt-2 font-medium">{pdfError}</p>
+                </div>
+                <div className="flex gap-3">
+                  <Button
+                    onClick={handleViewCV}
+                    className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  >
+                    ↻ Retry
+                  </Button>
+                  <Button
+                    onClick={handleClosePDF}
+                    className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+                  >
+                    ✕ Close
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Document
+                file={pdfFile}
+                onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={onDocumentLoadError}
+                loading={
+                  <div className="flex h-64 flex-col items-center justify-center">
+                    <div className="mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-yellow-500"></div>
+                    <p>Loading your CV...</p>
+                  </div>
+                }
+              >
+                {Array.from(new Array(numPages), (el, index) => (
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                    width={pdfWidth}
+                    className="mb-4 border shadow-sm"
+                    loading={
+                      <div className="flex h-64 items-center justify-center">
+                        <p>Loading page {index + 1}...</p>
+                      </div>
+                    }
+                  />
+                ))}
+              </Document>
+            )}
+          </div>
+        </div>
+      )}
+
       <style>{`
-        /* Responsive Hexagon Frame Styles */
         .hex-frame {
           position: relative;
           width: 100%;
@@ -278,20 +404,20 @@ const HeroSection = ({ menuOpen }) => {
           background: rgba(234, 179, 8, 0.7);
         }
 
-        /* Simplified hover effects for mobile */
-        @media (hover: hover) {
-          .hex-frame:hover .hex-layer-1,
-          .hex-frame:hover .hex-layer-2 {
-            opacity: 0;
-          }
+        .blink-cursor {
+          animation: blink 1s step-end infinite;
+        }
 
-          .hex-frame:hover {
-            transform: translateY(-5px);
-            filter: drop-shadow(0 10px 20px rgba(246, 211, 101, 0.3));
+        @keyframes blink {
+          from,
+          to {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
           }
         }
 
-        /* Responsive Card Styles */
         .card {
           --background: linear-gradient(to right, #f6d365 0%, #fda085 100%);
           width: 100%;
@@ -346,18 +472,6 @@ const HeroSection = ({ menuOpen }) => {
           z-index: 2;
           padding: 1rem;
           transition: all 0.3s ease;
-        }
-
-        @media (hover: hover) {
-          .card:hover::before,
-          .card:hover::after {
-            opacity: 0;
-          }
-
-          .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(246, 211, 101, 0.2);
-          }
         }
       `}</style>
     </section>
