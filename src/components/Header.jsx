@@ -30,7 +30,7 @@ const Header = () => {
           </Link>
         </motion.div>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - Removed black backgrounds */}
         <nav className="hidden items-center space-x-8 md:flex">
           {[
             { path: "/", name: "Home" },
@@ -49,8 +49,8 @@ const Header = () => {
                 className={({ isActive }) =>
                   `relative rounded-md px-3 py-2 text-lg font-medium ${
                     isActive
-                      ? "text-yellow-400"
-                      : "bg-black/80 text-gray-300 transition-colors hover:bg-black hover:text-yellow-400"
+                      ? "text-yellow-400" // Removed bg-black
+                      : "text-gray-300 transition-colors hover:text-yellow-400" // Removed background
                   }`
                 }
               >
@@ -75,7 +75,7 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Mobile Menu Button - Three Yellow Dashes */}
+        {/* Mobile Menu Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -94,7 +94,7 @@ const Header = () => {
         </motion.button>
       </div>
 
-      {/* Mobile Menu Slider */}
+      {/* Mobile Menu Slider - Kept black backgrounds */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -103,7 +103,7 @@ const Header = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex"
           >
-            {/* Overlay with solid black background */}
+            {/* Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -112,7 +112,7 @@ const Header = () => {
               onClick={() => setMenuOpen(false)}
             />
 
-            {/* Slider Panel - Solid Black Background */}
+            {/* Slider Panel with black background */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -120,7 +120,7 @@ const Header = () => {
               transition={{ type: "spring", damping: 25 }}
               className="relative flex h-full w-80 flex-col bg-black p-6 shadow-2xl"
             >
-              {/* Close Button (X icon) with Yellow Circle */}
+              {/* Close Button */}
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -146,7 +146,7 @@ const Header = () => {
                 </svg>
               </motion.button>
 
-              {/* Navigation Links with Black Background */}
+              {/* Navigation Links with black background */}
               <div className="flex flex-col gap-2 pt-12">
                 {[
                   { path: "/", name: "Home" },
