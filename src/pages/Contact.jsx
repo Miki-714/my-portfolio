@@ -8,7 +8,7 @@ const Contact = () => {
   });
 
   return (
-    <section className="relative overflow-hidden py-24" id="contact">
+    <section className="relative overflow-hidden py-12 sm:py-24" id="contact">
       {/* Background elements */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-gray-900"></div>
       <motion.div
@@ -21,41 +21,41 @@ const Contact = () => {
       <div className="absolute -right-20 -top-20 z-0 h-64 w-64 rounded-full bg-yellow-400/10 blur-3xl"></div>
       <div className="absolute -left-20 bottom-0 z-0 h-64 w-64 rounded-full bg-yellow-400/5 blur-3xl"></div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="mb-16 text-center"
+          className="mb-12 text-center sm:mb-16"
         >
-          <h1 className="text-4xl font-bold text-white md:text-5xl">
+          <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             Contact <span className="text-primary">Me</span>
           </h1>
-          <div className="from-primary mx-auto mt-4 h-1 w-24 bg-gradient-to-r to-yellow-300"></div>
-          <p className="mt-4 text-xl text-gray-400">
+          <div className="from-primary mx-auto mt-3 h-1 w-16 bg-gradient-to-r to-yellow-300 sm:mt-4 sm:w-24"></div>
+          <p className="mt-3 text-lg text-gray-400 sm:mt-4 sm:text-xl">
             Let&#39;s discuss your project or just say hello
           </p>
         </motion.div>
 
-        <div ref={ref} className="grid gap-8 md:grid-cols-2">
+        <div ref={ref} className="grid gap-6 md:grid-cols-2 md:gap-8">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card p-8"
+            className="glass-card p-6 sm:p-8"
           >
-            <h2 className="mb-6 text-3xl font-semibold text-white">
+            <h2 className="mb-4 text-2xl font-semibold text-white sm:mb-6 sm:text-3xl">
               Get In <span className="text-primary">Touch</span>
             </h2>
-            <p className="mb-8 text-lg leading-relaxed text-gray-400">
+            <p className="mb-6 text-base leading-relaxed text-gray-400 sm:mb-8 sm:text-lg">
               Have a project in mind or want to discuss potential opportunities?
               Feel free to reach out - I&#39;m always open to new collaborations
               and conversations about web development.
             </p>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Email */}
               <motion.div
                 initial={{ opacity: 0 }}
@@ -63,10 +63,10 @@ const Contact = () => {
                 transition={{ delay: 0.4 }}
                 className="flex items-start"
               >
-                <div className="text-primary mr-6">
+                <div className="text-primary mr-4 sm:mr-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7"
+                    className="h-6 w-6 sm:h-7 sm:w-7"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -80,8 +80,8 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-medium text-white">Email</h3>
-                  <p className="text-lg text-gray-400">
+                  <h3 className="text-lg font-medium text-white sm:text-xl">Email</h3>
+                  <p className="text-base text-gray-400 sm:text-lg">
                     mikias.dereje.pro@gmail.com
                   </p>
                   <a
@@ -100,10 +100,10 @@ const Contact = () => {
                 transition={{ delay: 0.5 }}
                 className="flex items-start"
               >
-                <div className="text-primary mr-6">
+                <div className="text-primary mr-4 sm:mr-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7"
+                    className="h-6 w-6 sm:h-7 sm:w-7"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -117,8 +117,8 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-medium text-white">GitHub</h3>
-                  <p className="text-lg text-gray-400">github.com/miki-714</p>
+                  <h3 className="text-lg font-medium text-white sm:text-xl">GitHub</h3>
+                  <p className="text-base text-gray-400 sm:text-lg">github.com/miki-714</p>
                   <a
                     href="https://github.com/miki-714"
                     target="_blank"
@@ -137,10 +137,10 @@ const Contact = () => {
                 transition={{ delay: 0.6 }}
                 className="flex items-start"
               >
-                <div className="text-primary mr-6">
+                <div className="text-primary mr-4 sm:mr-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7"
+                    className="h-6 w-6 sm:h-7 sm:w-7"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -154,8 +154,8 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-medium text-white">LinkedIn</h3>
-                  <p className="text-lg text-gray-400">Mikias Dereje</p>
+                  <h3 className="text-lg font-medium text-white sm:text-xl">LinkedIn</h3>
+                  <p className="text-base text-gray-400 sm:text-lg">Mikias Dereje</p>
                   <a
                     href="https://www.linkedin.com/in/mikias-dereje-576557374/"
                     target="_blank"
@@ -174,10 +174,10 @@ const Contact = () => {
                 transition={{ delay: 0.7 }}
                 className="flex items-start"
               >
-                <div className="text-primary mr-6">
+                <div className="text-primary mr-4 sm:mr-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7"
+                    className="h-6 w-6 sm:h-7 sm:w-7"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -191,10 +191,10 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-medium text-white">
+                  <h3 className="text-lg font-medium text-white sm:text-xl">
                     Availability
                   </h3>
-                  <p className="text-lg text-gray-400">
+                  <p className="text-base text-gray-400 sm:text-lg">
                     Open to remote opportunities
                   </p>
                   <a
@@ -215,12 +215,12 @@ const Contact = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="glass-card p-8"
+            className="glass-card p-6 sm:p-8"
           >
-            <h2 className="mb-6 text-3xl font-semibold text-white">
+            <h2 className="mb-4 text-2xl font-semibold text-white sm:mb-6 sm:text-3xl">
               Send Me a <span className="text-primary">Message</span>
             </h2>
-            <form className="space-y-6">
+            <form className="space-y-4 sm:space-y-6">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
@@ -228,14 +228,14 @@ const Contact = () => {
               >
                 <label
                   htmlFor="name"
-                  className="mb-2 block text-lg font-medium text-white"
+                  className="mb-1 block text-base font-medium text-white sm:mb-2 sm:text-lg"
                 >
                   Your Name
                 </label>
                 <input
                   type="text"
                   id="name"
-                  className="focus:border-primary focus:ring-primary/30 w-full rounded-xl border-2 border-gray-800 bg-gray-900/50 px-5 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:outline-none focus:ring-2"
+                  className="focus:border-primary focus:ring-primary/30 w-full rounded-xl border-2 border-gray-800 bg-gray-900/50 px-4 py-2 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:outline-none focus:ring-2 sm:px-5 sm:py-3"
                   placeholder="Your Name"
                 />
               </motion.div>
@@ -247,14 +247,14 @@ const Contact = () => {
               >
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-lg font-medium text-white"
+                  className="mb-1 block text-base font-medium text-white sm:mb-2 sm:text-lg"
                 >
                   Your Email
                 </label>
                 <input
                   type="email"
                   id="email"
-                  className="focus:border-primary focus:ring-primary/30 w-full rounded-xl border-2 border-gray-800 bg-gray-900/50 px-5 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:outline-none focus:ring-2"
+                  className="focus:border-primary focus:ring-primary/30 w-full rounded-xl border-2 border-gray-800 bg-gray-900/50 px-4 py-2 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:outline-none focus:ring-2 sm:px-5 sm:py-3"
                   placeholder="your@email.com"
                 />
               </motion.div>
@@ -266,14 +266,14 @@ const Contact = () => {
               >
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-lg font-medium text-white"
+                  className="mb-1 block text-base font-medium text-white sm:mb-2 sm:text-lg"
                 >
                   Your Message
                 </label>
                 <textarea
                   id="message"
-                  rows="5"
-                  className="focus:border-primary focus:ring-primary/30 w-full rounded-xl border-2 border-gray-800 bg-gray-900/50 px-5 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:outline-none focus:ring-2"
+                  rows="4"
+                  className="focus:border-primary focus:ring-primary/30 w-full rounded-xl border-2 border-gray-800 bg-gray-900/50 px-4 py-2 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:outline-none focus:ring-2 sm:px-5 sm:py-3 sm:rows-5"
                   placeholder="Hello Mikiyas, I'd like to discuss a potential project..."
                 ></textarea>
               </motion.div>
@@ -285,7 +285,7 @@ const Contact = () => {
               >
                 <button
                   type="submit"
-                  className="primary-button w-full rounded-xl px-6 py-4 text-lg font-bold transition-all"
+                  className="primary-button w-full rounded-xl px-4 py-3 text-base font-bold transition-all sm:px-6 sm:py-4 sm:text-lg"
                 >
                   Send Message
                 </button>
