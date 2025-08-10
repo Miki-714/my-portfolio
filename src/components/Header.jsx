@@ -49,7 +49,7 @@ const Header = () => {
                 className={({ isActive }) =>
                   `relative rounded-md px-3 py-2 text-lg font-medium ${
                     isActive
-                      ? "bg-black text-yellow-400"
+                      ? "text-yellow-400"
                       : "bg-black/80 text-gray-300 transition-colors hover:bg-black hover:text-yellow-400"
                   }`
                 }
